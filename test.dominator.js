@@ -27,4 +27,8 @@ $(document).ready(function(){
         equals(html('div p#myid'), '<div><p id="myid"></p></div>', '"div p#myid" generates a div/p[id=myid]');
         equals(html('div#myid p'), '<div id="myid"><p></p></div>', '"div#myid p" generates a div[id=myid]/p');
     });
+
+    test('generate tagless id', function() {
+        equals(html('#myid'), '<div id="myid"></div>', '"#myid" generates a div[id=myid]');
+    });
 });

@@ -22,7 +22,7 @@
             if (parts.length == 2) {
                 parsed.attrs.id = parts[1];
             }
-            parsed.tag = parts.length ? parts[0] : 'div';
+            parsed.tag = parts[0] || 'div';
             return parsed;
         }
     });
