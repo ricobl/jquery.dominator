@@ -31,4 +31,18 @@ $(document).ready(function(){
     test('generate tagless id', function() {
         equals(html('#myid'), '<div id="myid"></div>', '"#myid" generates a div[id=myid]');
     });
+
+    test('generate with class', function() {
+        equals(html('div.myclass'), '<div class="myclass"></div>', '"div.myclass" generates a div[class=myclass]');
+    });
+
+    test('generate with tagless class', function() {
+        equals(html('.myclass'), '<div class="myclass"></div>', '".myclass" generates a div[class=myclass]');
+    });
+
+    test('generate with class and id', function() {
+        expect(2);
+        equals(html('div#myid.myclass'), '<div id="myid" class="myclass"></div>', '"div.myclass#myid" generates a div[id=myid, class=myclass]');
+        equals(html('div.myclass#myid'), '<div class="myclass" id="myid"></div>', '"div#myid.myclass" generates a div[id=myid, class=myclass]');
+    });
 });

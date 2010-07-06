@@ -17,12 +17,20 @@
     $.extend(dominator, {
         parseSelector: function (selector) {
             /* Returns structured data from a simple selector */
-            var parts = selector.split('#');
-            var parsed = {attrs: {}};
-            if (parts.length == 2) {
-                parsed.attrs.id = parts[1];
-            }
-            parsed.tag = parts[0] || 'div';
+            var parsed = {attrs: {}, tag: 'div'};
+            var parts = selector.split(/((?:[#.]\w+))/);
+            $.each(parts, function(){
+                if (this == "") return;
+                if (this.charAt(0) == '#') {
+                    parsed.attrs.id = this.substring(1, this.length);
+                }
+                else if (this.charAt(0) == '.') {
+                    parsed.attrs.class = this.substring(1, this.length);
+                }
+                else {
+                    parsed.tag = this;
+                }
+            });
             return parsed;
         }
     });
