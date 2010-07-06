@@ -16,9 +16,9 @@ this:
 does this:
 
     <div id="main">
-	<ul class="messages">
-	    <li id="red"></li>
-	    <li id="blue"></li>
-	    <li id="green"></li>
-	</ul>
+        <ul class="messages">
+            <li id="red"></li>
+            <li id="blue"></li>
+            <li id="green"></li>
+        </ul>
     </div>
