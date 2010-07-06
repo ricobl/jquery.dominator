@@ -1,3 +1,14 @@
+/*
+ * jQuery dominator plugin
+ * http://ricobl.wordpress.com/
+ *
+ * Copyright (c) 2010 Enrico Batista da Luz
+ * Dual licensed under the MIT and GPL 3+ licenses.
+ *
+ * http://www.opensource.org/licenses/mit-license.php
+ * http://www.gnu.org/copyleft/gpl.html
+ */
+
 (function($){
     var dominator = function (selector) {
         /* Generates markup using CSS selectors */
