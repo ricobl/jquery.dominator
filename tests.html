@@ -1,0 +1,34 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<link rel="stylesheet" href="http://github.com/jquery/qunit/raw/master/qunit/qunit.css" type="text/css" media="screen" />
+<script type="text/javascript" src="http://github.com/jquery/qunit/raw/master/qunit/qunit.js"></script>
+<script>
+(function($){
+    $.extend({
+        dominator: function (selector) {
+            return $('<' + selector + ' />');
+        }
+    });
+})(jQuery);
+</script>
+<script>
+$(document).ready(function(){
+    module('dominator');
+
+    test('generate by simple tag', function() {
+        expect(2);
+        ok($.dominator('p').is('p'), '"p" selector generates a paragraph');
+        ok($.dominator('div').is('div'), '"div" selector generates a div');
+    });
+});
+</script>
+</head>
+<body>
+    <h1 id="qunit-header">QUnit example</h1>
+    <h2 id="qunit-banner"></h2>
+    <h2 id="qunit-userAgent"></h2>
+    <ol id="qunit-tests"></ol>
+</body>
+</html>
