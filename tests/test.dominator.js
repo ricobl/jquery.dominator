@@ -44,7 +44,7 @@ $(document).ready(function(){
         expect(2);
         var element = $.dominator('div#myid.myclass');
         ok(element.hasClass('myclass'), 'Element has class "myclass"');
-        ok(element.attr('id'), 'myid', 'Element has id "myid"');
+        equals(element.attr('id'), 'myid', 'Element has id "myid"');
     });
 
     test('generate with class and id (inverted)', function() {
