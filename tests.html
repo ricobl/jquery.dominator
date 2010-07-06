@@ -8,7 +8,16 @@
 (function($){
     $.extend({
         dominator: function (selector) {
-            return $('<' + selector + ' />');
+            var parts = selector.split(' ').reverse();
+            var element = null;
+            $.each(parts, function(){
+                var part = $('<' + this + ' />');
+                if (element) {
+                    part.append(element);
+                }
+                element = part;
+            });
+            return element;
         }
     });
 })(jQuery);
@@ -17,10 +26,20 @@
 $(document).ready(function(){
     module('dominator');
 
-    test('generate by simple tag', function() {
+    function html (element) {
+        return $('<div />').append(element).html();
+    }
+
+    test('generate simple tag', function() {
         expect(2);
-        ok($.dominator('p').is('p'), '"p" selector generates a paragraph');
-        ok($.dominator('div').is('div'), '"div" selector generates a div');
+        equals(html($.dominator('p')), '<p></p>', '"p" generates a paragraph');
+        equals(html($.dominator('div')), '<div></div>', '"div" generates a div');
+    });
+
+    test('generate nested tags', function() {
+        expect(2);
+        equals(html($.dominator('div p')), '<div><p></p></div>', '"div p" selector generates a nested structure');
+        equals(html($.dominator('div p span a')), '<div><p><span><a></a></span></p></div>', '"div p span a" selector generates a nested structure');
     });
 });
 </script>
