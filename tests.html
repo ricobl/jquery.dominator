@@ -1,25 +1,40 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<script src="http://code.jquery.com/jquery-latest.js"></script>
-<link rel="stylesheet" href="http://github.com/jquery/qunit/raw/master/qunit/qunit.css" type="text/css" media="screen" />
-<script type="text/javascript" src="http://github.com/jquery/qunit/raw/master/qunit/qunit.js"></script>
+<script src="assets/jquery-1.4.2.min.js"></script>
+<link rel="stylesheet" href="assets/qunit.css" type="text/css" media="screen" />
+<script type="text/javascript" src="assets/qunit.js"></script>
 <script>
 (function($){
-    $.extend({
-        dominator: function (selector) {
-            var parts = selector.split(' ').reverse();
-            var element = null;
-            $.each(parts, function(){
-                var part = $('<' + this + ' />');
-                if (element) {
-                    part.append(element);
-                }
-                element = part;
-            });
-            return element;
+    var dominator = function (selector) {
+        /* Generates markup using CSS selectors */
+        var parts = selector.split(' ').reverse();
+        var element = null;
+        $.each(parts, function(){
+            var parsed = $.dominator.parseSelector(this);
+            var part = $('<' + parsed.tag + ' />');
+            part.attr(parsed.attrs);
+            if (element) {
+                part.append(element);
+            }
+            element = part;
+        });
+        return element;
+    };
+    $.extend(dominator, {
+        parseSelector: function (selector) {
+            /* Returns structured data from a simple selector */
+            var parts = selector.split('#');
+            var parsed = {attrs: {}};
+            if (parts.length == 2) {
+                parsed.attrs.id = parts[1];
+            }
+            parsed.tag = parts.length ? parts[0] : 'div';
+            return parsed;
         }
     });
+
+    $.extend({dominator: dominator});
 })(jQuery);
 </script>
 <script>
@@ -32,14 +47,22 @@ $(document).ready(function(){
 
     test('generate simple tag', function() {
         expect(2);
-        equals(html($.dominator('p')), '<p></p>', '"p" generates a paragraph');
+        equals(html($.dominator('p')), '<p></p>', '"p" generates a p');
         equals(html($.dominator('div')), '<div></div>', '"div" generates a div');
     });
 
     test('generate nested tags', function() {
         expect(2);
-        equals(html($.dominator('div p')), '<div><p></p></div>', '"div p" selector generates a nested structure');
-        equals(html($.dominator('div p span a')), '<div><p><span><a></a></span></p></div>', '"div p span a" selector generates a nested structure');
+        equals(html($.dominator('div p')), '<div><p></p></div>', '"div p" selector generates div/p');
+        equals(html($.dominator('div p span a')), '<div><p><span><a></a></span></p></div>', '"div p span a" selector generates div/p/span/a');
+    });
+
+    test('generate with id', function() {
+        equals(html($.dominator('div#myid')), '<div id="myid"></div>', '"div#myid" generates a div[id=myid]');
+    });
+
+    test('generate simple tag with nested id', function() {
+        equals(html($.dominator('div p#myid')), '<div><p id="myid"></p></div>', '"div p#myid" generates a div/p[id=myid]');
     });
 });
 </script>
