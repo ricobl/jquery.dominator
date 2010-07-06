@@ -34,6 +34,7 @@ $(document).ready(function(){
 
     test('generate with class', function() {
         equals(html('div.myclass'), '<div class="myclass"></div>', '"div.myclass" generates a div[class=myclass]');
+        equals(html('div.my-class'), '<div class="my-class"></div>', '"div.my-class" generates a div[class=my-class]');
     });
 
     test('generate with tagless class', function() {

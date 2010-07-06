@@ -30,7 +30,7 @@
             /* Returns structured data from a simple selector */
             var parsed = {attrs: {}, tag: 'div'};
             var classes = [];
-            var parts = selector.split(/((?:[#.]\w+))/);
+            var parts = selector.split(/((?:[#.][\w-]+))/);
             $.each(parts, function(){
                 if (this == "") return;
                 if (this.charAt(0) == '#') {
