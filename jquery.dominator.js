@@ -29,6 +29,7 @@
         parseSelector: function (selector) {
             /* Returns structured data from a simple selector */
             var parsed = {attrs: {}, tag: 'div'};
+            var classes = [];
             var parts = selector.split(/((?:[#.]\w+))/);
             $.each(parts, function(){
                 if (this == "") return;
@@ -36,12 +37,15 @@
                     parsed.attrs.id = this.substring(1, this.length);
                 }
                 else if (this.charAt(0) == '.') {
-                    parsed.attrs.class = this.substring(1, this.length);
+                    classes.push(this.substring(1, this.length));
                 }
                 else {
                     parsed.tag = this;
                 }
             });
+            if (classes.length > 0) {
+                parsed.attrs.class = classes.join(' ');
+            }
             return parsed;
         }
     });

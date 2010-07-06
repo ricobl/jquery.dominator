@@ -53,4 +53,9 @@ $(document).ready(function(){
         ok(element.hasClass('myclass'), 'Element has class "myclass"');
         equals(element.attr('id'), 'myid', 'Element has id "myid"');
     });
+
+    test('generate multiple classes', function() {
+        var element = $.dominator('div.first.second');
+        equals(element.attr('class'), 'first second', 'Element has classes "first" and "second"');
+    });
 });
