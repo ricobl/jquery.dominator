@@ -2,6 +2,7 @@ $(document).ready(function(){
     module('dominator');
 
     function html (element) {
+        /* Helper for innerHtml checking. */
         return $('<div />').append(element).html();
     }
 
@@ -21,7 +22,9 @@ $(document).ready(function(){
         equals(html($.dominator('div#myid')), '<div id="myid"></div>', '"div#myid" generates a div[id=myid]');
     });
 
-    test('generate simple tag with nested id', function() {
+    test('generate nested with id', function() {
+        expect(2);
         equals(html($.dominator('div p#myid')), '<div><p id="myid"></p></div>', '"div p#myid" generates a div/p[id=myid]');
+        equals(html($.dominator('div#myid p')), '<div id="myid"><p></p></div>', '"div#myid p" generates a div[id=myid]/p');
     });
 });
