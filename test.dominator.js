@@ -43,15 +43,14 @@ $(document).ready(function(){
     test('generate with class and id', function() {
         expect(2);
         var element = $.dominator('div#myid.myclass');
-        equals(element.attr('class'), 'myclass', 'Element has class "myclass"');
-        equals(element.attr('id'), 'myid', 'Element has id "myid"');
-
+        ok(element.hasClass('myclass'), 'Element has class "myclass"');
+        ok(element.attr('id'), 'myid', 'Element has id "myid"');
     });
 
     test('generate with class and id (inverted)', function() {
         expect(2);
         var element = $.dominator('div.myclass#myid');
-        equals(element.attr('class'), 'myclass', 'Element has class "myclass"');
+        ok(element.hasClass('myclass'), 'Element has class "myclass"');
         equals(element.attr('id'), 'myid', 'Element has id "myid"');
     });
 });
