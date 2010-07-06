@@ -42,7 +42,16 @@ $(document).ready(function(){
 
     test('generate with class and id', function() {
         expect(2);
-        equals(html('div#myid.myclass'), '<div id="myid" class="myclass"></div>', '"div.myclass#myid" generates a div[id=myid, class=myclass]');
-        equals(html('div.myclass#myid'), '<div class="myclass" id="myid"></div>', '"div#myid.myclass" generates a div[id=myid, class=myclass]');
+        var element = $.dominator('div#myid.myclass');
+        equals(element.attr('class'), 'myclass', 'Element has class "myclass"');
+        equals(element.attr('id'), 'myid', 'Element has id "myid"');
+
+    });
+
+    test('generate with class and id (inverted)', function() {
+        expect(2);
+        var element = $.dominator('div.myclass#myid');
+        equals(element.attr('class'), 'myclass', 'Element has class "myclass"');
+        equals(element.attr('id'), 'myid', 'Element has id "myid"');
     });
 });
