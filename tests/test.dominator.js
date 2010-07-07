@@ -59,4 +59,14 @@ $(document).ready(function(){
         var element = $.dominator('div.first.second');
         equals(element.attr('class'), 'first second', 'Element has classes "first" and "second"');
     });
+
+    test('multiple selectors', function() {
+        var element = $.dominator('div.first.second');
+        equals(html('div, p'), '<div></div><p></p>', '"div, p" generates a div and a p');
+        equals(
+            html('div#id, p.class a'),
+            '<div id="id"></div><p class="class"><a></a></p>',
+            '"div#id, p.class a" generates'
+        );
+    });
 });

@@ -12,18 +12,23 @@
 (function($){
     var dominator = function (selector) {
         /* Generates markup using CSS selectors */
-        var parts = selector.split(' ').reverse();
-        var element = null;
-        $.each(parts, function(){
-            var parsed = $.dominator.parseSelector(this);
-            var part = $('<' + parsed.tag + ' />');
-            part.attr(parsed.attrs);
-            if (element) {
-                part.append(element);
-            }
-            element = part;
+        var element_set = $();
+        var selectors = selector.split(/\s*,\s*/);
+        $.each(selectors, function () {
+            var parts = this.split(/\s+/).reverse();
+            var element = null;
+            $.each(parts, function(){
+                var parsed = $.dominator.parseSelector(this);
+                var part = $('<' + parsed.tag + ' />');
+                part.attr(parsed.attrs);
+                if (element) {
+                    part.append(element);
+                }
+                element = part;
+            });
+            element_set = element_set.add(element);
         });
-        return element;
+        return element_set;
     };
     $.extend(dominator, {
         parseSelector: function (selector) {
