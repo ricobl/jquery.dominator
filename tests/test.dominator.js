@@ -71,12 +71,6 @@ $(document).ready(function(){
         html_equals('div#id, p.class a', '<div id="id"></div><p class="class"><a></a></p>');
     });
 
-    test('multiple selectors', function() {
-        expect(2);
-        html_equals('div, p', '<div></div><p></p>');
-        html_equals('div#id, p.class a', '<div id="id"></div><p class="class"><a></a></p>');
-    });
-
     test('parse simple attribute', function() {
         html_equals('a[title=Title]', '<a title="Title"></a>');
     });
