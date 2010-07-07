@@ -40,6 +40,7 @@ $(document).ready(function(){
     test('generate with class', function() {
         html_equals('div.myclass', '<div class="myclass"></div>');
         html_equals('div.my-class', '<div class="my-class"></div>');
+        html_equals('div.my_class', '<div class="my_class"></div>');
     });
 
     test('generate with tagless class', function() {
