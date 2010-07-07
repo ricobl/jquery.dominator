@@ -6,39 +6,44 @@ $(document).ready(function(){
         return $('<div />').append($.dominator(selector)).html();
     }
 
+    function html_equals (selector, expected) {
+        /* Compares the resulting HTML with the expected. */
+        equals(html(selector), expected, '"' + selector + '" generates');
+    }
+
     test('generate simple tag', function() {
         expect(2);
-        equals(html('p'), '<p></p>', '"p" generates a p');
-        equals(html('div'), '<div></div>', '"div" generates a div');
+        html_equals('p', '<p></p>');
+        html_equals('div', '<div></div>');
     });
 
     test('generate nested tags', function() {
         expect(2);
-        equals(html('div p'), '<div><p></p></div>', '"div p" selector generates div/p');
-        equals(html('div p span a'), '<div><p><span><a></a></span></p></div>', '"div p span a" selector generates div/p/span/a');
+        html_equals('div p', '<div><p></p></div>');
+        html_equals('div p span a', '<div><p><span><a></a></span></p></div>');
     });
 
     test('generate with id', function() {
-        equals(html('div#myid'), '<div id="myid"></div>', '"div#myid" generates a div[id=myid]');
+        html_equals('div#myid', '<div id="myid"></div>');
     });
 
     test('generate nested with id', function() {
         expect(2);
-        equals(html('div p#myid'), '<div><p id="myid"></p></div>', '"div p#myid" generates a div/p[id=myid]');
-        equals(html('div#myid p'), '<div id="myid"><p></p></div>', '"div#myid p" generates a div[id=myid]/p');
+        html_equals('div p#myid', '<div><p id="myid"></p></div>');
+        html_equals('div#myid p', '<div id="myid"><p></p></div>');
     });
 
     test('generate tagless id', function() {
-        equals(html('#myid'), '<div id="myid"></div>', '"#myid" generates a div[id=myid]');
+        html_equals('#myid', '<div id="myid"></div>');
     });
 
     test('generate with class', function() {
-        equals(html('div.myclass'), '<div class="myclass"></div>', '"div.myclass" generates a div[class=myclass]');
-        equals(html('div.my-class'), '<div class="my-class"></div>', '"div.my-class" generates a div[class=my-class]');
+        html_equals('div.myclass', '<div class="myclass"></div>');
+        html_equals('div.my-class', '<div class="my-class"></div>');
     });
 
     test('generate with tagless class', function() {
-        equals(html('.myclass'), '<div class="myclass"></div>', '".myclass" generates a div[class=myclass]');
+        html_equals('.myclass', '<div class="myclass"></div>');
     });
 
     test('generate with class and id', function() {
@@ -56,17 +61,11 @@ $(document).ready(function(){
     });
 
     test('generate multiple classes', function() {
-        var element = $.dominator('div.first.second');
-        equals(element.attr('class'), 'first second', 'Element has classes "first" and "second"');
+        html_equals('div.first.second', '<div class="first second"></div>');
     });
 
     test('multiple selectors', function() {
-        var element = $.dominator('div.first.second');
-        equals(html('div, p'), '<div></div><p></p>', '"div, p" generates a div and a p');
-        equals(
-            html('div#id, p.class a'),
-            '<div id="id"></div><p class="class"><a></a></p>',
-            '"div#id, p.class a" generates'
-        );
+        html_equals('div, p', '<div></div><p></p>');
+        html_equals('div#id, p.class a', '<div id="id"></div><p class="class"><a></a></p>');
     });
 });
