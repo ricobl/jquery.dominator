@@ -3,22 +3,17 @@
 
 # What is this ?
 
-creating DOM elements with awesomeness
+A jQuery plugin for creating DOM elements from CSS selectors.
 
 # Nutshell
 
-this:
+This:
 
-    var $main = $.dominator("#main ul.messages li#red,
-                             #main ul.messages li#blue,
-                             #main ul.messages li#green")
+    var $paragraphs = $.dominator("p#red, p#blue, p#green");
 
-does this:
+Creates this:
 
-    <div id="main">
-        <ul class="messages">
-            <li id="red"></li>
-            <li id="blue"></li>
-            <li id="green"></li>
-        </ul>
-    </div>
+    <p id="red"></p>
+    <p id="blue"></p>
+    <p id="green"></p>
+
