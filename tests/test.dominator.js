@@ -80,4 +80,8 @@ $(document).ready(function(){
     test('parse simple attribute', function() {
         html_equals('a[title=Title]', '<a title="Title"></a>');
     });
+
+    test('parse consecutive attributes', function() {
+        html_equals('a[name=Name][title=Title]', '<a name="Name" title="Title"></a>');
+    });
 });
