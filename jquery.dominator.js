@@ -35,7 +35,7 @@
             /* Returns structured data from a simple selector */
             var parsed = {attrs: {}, tag: 'div'};
             var classes = [];
-            var parts = selector.split(/((?:[#.][\w-]+))/);
+            var parts = selector.split(/((?:[#.][\w-]+|\[[\w=]+\]))/);
             $.each(parts, function(){
                 if (this == "") return;
                 if (this.charAt(0) == '#') {
@@ -43,6 +43,14 @@
                 }
                 else if (this.charAt(0) == '.') {
                     classes.push(this.substring(1, this.length));
+                }
+                else if (this.charAt(0) == '[') {
+                    var attr = this.substring(1, this.length - 1);
+                    var attr_parts = attr.split(/\s*=\s*/);
+                    console.log(attr_parts);
+                    var key = attr_parts[0];
+                    var value = attr_parts[1] || '';
+                    parsed.attrs[key] = value;
                 }
                 else {
                     parsed.tag = this;
