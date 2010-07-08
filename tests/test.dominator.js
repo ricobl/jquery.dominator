@@ -1,9 +1,9 @@
 $(document).ready(function(){
     module('dominator');
 
-    function html (selector) {
+    function html (selector, context) {
         /* Helper for innerHtml checking. */
-        return $('<div />').append($.dominator(selector)).html();
+        return $('<div />').append($.dominator(selector, context)).html();
     }
 
     function html_equals (selector, expected) {
@@ -76,6 +76,13 @@ $(document).ready(function(){
     });
 
     test('parse consecutive attributes', function() {
-        html_equals('a[name=Name][title=Title]', '<a name="Name" title="Title"></a>');
+        expect(2);
+        var element = $.dominator('a[name=Name][title=Title]');
+        equals(element.attr('name'), 'Name', 'Element has name "Name"');
+        equals(element.attr('title'), 'Title', 'Element has title "Title"');
+    });
+
+    test('allow variables', function() {
+        equals(html('a[name=${myvar}]', {myvar: 'MyVar'}), '<a name="MyVar"></a>');
     });
 });

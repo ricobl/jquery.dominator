@@ -10,8 +10,12 @@
  */
 
 (function($){
-    var dominator = function (selector) {
-        /* Generates markup using CSS selectors */
+    /* Generates markup using CSS selectors */
+    var dominator = function (selector, context) {
+        if (context) {
+            selector = $.dominator.renderVariables(selector, context);
+        }
+
         var element_set = $();
         var selectors = selector.split(/\s*,\s*/);
         $.each(selectors, function () {
@@ -59,6 +63,13 @@
                 parsed.attrs.class = classes.join(' ');
             }
             return parsed;
+        },
+        renderVariables: function (template, context) {
+            var rendered = template;
+            for (var key in context) {
+                rendered = rendered.replace('${' + key + '}', context[key]);
+            }
+            return rendered;
         }
     });
 
