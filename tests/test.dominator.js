@@ -3,7 +3,7 @@ $(document).ready(function(){
 
     function html (selector, context) {
         /* Helper for innerHtml checking. */
-        return $('<div />').append($.dominator(selector, context)).html();
+        return $('<div />').append($.dominator(selector, context)).html().toLowerCase();
     }
 
     function html_equals (selector, expected) {
@@ -11,14 +11,12 @@ $(document).ready(function(){
         equals(html(selector), expected, '"' + selector + '" generates');
     }
 
-    test('generate simple tag', function() {
-        expect(2);
+    test('generate simple tag', 2, function() {
         html_equals('p', '<p></p>');
         html_equals('div', '<div></div>');
     });
 
-    test('generate nested tags', function() {
-        expect(2);
+    test('generate nested tags', 2, function() {
         html_equals('div p', '<div><p></p></div>');
         html_equals('div p span a', '<div><p><span><a></a></span></p></div>');
     });
@@ -27,8 +25,7 @@ $(document).ready(function(){
         html_equals('div#myid', '<div id="myid"></div>');
     });
 
-    test('generate nested with id', function() {
-        expect(2);
+    test('generate nested with id', 2, function() {
         html_equals('div p#myid', '<div><p id="myid"></p></div>');
         html_equals('div#myid p', '<div id="myid"><p></p></div>');
     });
@@ -47,15 +44,13 @@ $(document).ready(function(){
         html_equals('.myclass', '<div class="myclass"></div>');
     });
 
-    test('generate with class and id', function() {
-        expect(2);
+    test('generate with class and id', 2, function() {
         var element = $.dominator('div#myid.myclass');
         ok(element.hasClass('myclass'), 'Element has class "myclass"');
         equals(element.attr('id'), 'myid', 'Element has id "myid"');
     });
 
-    test('generate with class and id (inverted)', function() {
-        expect(2);
+    test('generate with class and id (inverted)', 2, function() {
         var element = $.dominator('div.myclass#myid');
         ok(element.hasClass('myclass'), 'Element has class "myclass"');
         equals(element.attr('id'), 'myid', 'Element has id "myid"');
@@ -65,24 +60,22 @@ $(document).ready(function(){
         html_equals('div.first.second', '<div class="first second"></div>');
     });
 
-    test('multiple selectors', function() {
-        expect(2);
+    test('multiple selectors', 2, function() {
         html_equals('div, p', '<div></div><p></p>');
         html_equals('div#id, p.class a', '<div id="id"></div><p class="class"><a></a></p>');
     });
 
     test('parse simple attribute', function() {
-        html_equals('a[title=Title]', '<a title="Title"></a>');
+        html_equals('a[title=simpletitle]', '<a title="simpletitle"></a>');
     });
 
-    test('parse consecutive attributes', function() {
-        expect(2);
+    test('parse consecutive attributes', 2, function() {
         var element = $.dominator('a[name=Name][title=Title]');
         equals(element.attr('name'), 'Name', 'Element has name "Name"');
         equals(element.attr('title'), 'Title', 'Element has title "Title"');
     });
 
     test('allow variables', function() {
-        equals(html('a[name=${myvar}]', {myvar: 'MyVar'}), '<a name="MyVar"></a>');
+        equals(html('a[name=${myvar}]', {myvar: 'myvariable'}), '<a name="myvariable"></a>');
     });
 });

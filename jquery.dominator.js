@@ -60,11 +60,14 @@
                 }
             });
             if (classes.length > 0) {
-                parsed.attrs.class = classes.join(' ');
+                parsed.attrs['class'] = classes.join(' ');
             }
             return parsed;
         },
         renderVariables: function (template, context) {
+            if (!context) {
+                return template;
+            }
             var rendered = template;
             for (var key in context) {
                 rendered = rendered.replace('${' + key + '}', context[key]);
