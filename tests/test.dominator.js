@@ -74,6 +74,14 @@ $(document).ready(function(){
         dom_equals('a[title=simpletitle]', '<a title="simpletitle"></a>');
     });
 
+    test('parse attribute with special tokens', 4, function() {
+        // TODO: allow escape brackets inside attribute values
+        dom_equals('a[title=With Space]', '<a title="With Space"></a>');
+        dom_equals('a[title=With,Comma]', '<a title="With,Comma"></a>');
+        dom_equals('a[title=With#Hash]', '<a title="With#Hash"></a>');
+        dom_equals('a[title=With.Dot]', '<a title="With.Dot"></a>');
+    });
+
     test('parse consecutive attributes', 2, function() {
         var element = $.dominator('a[name=Name][title=Title]');
         equals(element.attr('name'), 'Name', 'Element has name "Name"');
@@ -83,4 +91,9 @@ $(document).ready(function(){
     test('allow variables', function() {
         html_equals($.dominator('a[name=${myvar}]', {myvar: 'myvariable'}), '<a name="myvariable"></a>');
     });
+
+    test('allow variables with spaces', function() {
+        html_equals($.dominator('a[name=${myvar}]', {myvar: 'My Variable'}), '<a name="My Variable"></a>');
+    });
+
 });
