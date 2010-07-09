@@ -1,5 +1,6 @@
 /*
  * jQuery dominator plugin
+ * Version: 0.1.0
  * http://ricobl.wordpress.com/
  *
  * Copyright (c) 2010 Enrico Batista da Luz
@@ -16,7 +17,7 @@
             selector = $.dominator.renderVariables(selector, context);
         }
 
-        var element_set = $();
+        var element_set = $([]);
         var element_selectors = $.dominator.splitSelectors(selector);
 
         $.each(element_selectors, function () {
