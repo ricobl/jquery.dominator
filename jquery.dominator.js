@@ -24,12 +24,25 @@
             var element = null;
             $.each(parts, function(index){
                 var parsed = $.dominator.parseSelector(parts[index]);
-                var part = $('<' + parsed.tag + ' />');
-                part.attr(parsed.attrs);
-                if (element) {
-                    part.append(element);
+                var name = parsed.attrs.name || '';
+
+                // Name attribute needs special treatment for IE.
+                // It can't be changed after the element has been created.
+                if (name) {
+                    name = ' name="' + name + '"';
+                    delete parsed.attrs.name;
                 }
-                element = part;
+
+                // Create a new element with a tagname and an optional name
+                var newElement = $('<' + parsed.tag + name + ' />');
+
+                // Apply the attributes
+                newElement.attr(parsed.attrs);
+                if (element) {
+                    newElement.append(element);
+                }
+                // Append to the latest attribute
+                element = newElement;
             });
             element_set = element_set.add(element);
         });

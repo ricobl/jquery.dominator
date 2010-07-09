@@ -96,6 +96,10 @@ $(document).ready(function(){
         html_equals($.dominator('a[rel=${myvar}]', {myvar: 'My Variable'}), '<a rel="My Variable"></a>');
     });
 
-    // TODO: test name att with vars on IE
+    test('parse "name" attribute', function() {
+        html_equals($.dominator('a[name=${myvar}]', {myvar: 'myvar'}), '<a name="myvar"></a>');
+        html_equals($.dominator('a[name=${myvar}]', {myvar: 'My Variable'}), '<a name="My Variable"></a>');
+    });
+
 
 });
