@@ -89,11 +89,13 @@ $(document).ready(function(){
     });
 
     test('allow variables', function() {
-        html_equals($.dominator('a[name=${myvar}]', {myvar: 'myvariable'}), '<a name="myvariable"></a>');
+        html_equals($.dominator('a[rel=${myvar}]', {myvar: 'myvariable'}), '<a rel="myvariable"></a>');
     });
 
     test('allow variables with spaces', function() {
-        html_equals($.dominator('a[name=${myvar}]', {myvar: 'My Variable'}), '<a name="My Variable"></a>');
+        html_equals($.dominator('a[rel=${myvar}]', {myvar: 'My Variable'}), '<a rel="My Variable"></a>');
     });
+
+    // TODO: test name att with vars on IE
 
 });

@@ -63,33 +63,42 @@
             }
             return items;
         },
+        matchOrder: ['ID', 'TAG', 'CLASS', 'ATTR'],
+        match: {
+            ID: $.expr.match.ID,
+            CLASS: $.expr.match.CLASS,
+            ATTR: $.expr.match.ATTR,
+            TAG: $.expr.match.TAG
+        },
+        parse: {
+            ID: function (match, parsed) {
+                parsed.attrs.id = match[1];
+            },
+            CLASS: function (match, parsed) {
+                parsed.classes.push(match[1]);
+            },
+            TAG: function (match, parsed) {
+                parsed.tag = match[1];
+            },
+            ATTR: function (match, parsed) {
+                parsed.attrs[match[1]] = match[4];
+            }
+        },
         parseSelector: function (selector) {
             /* Returns structured data from a simple selector */
-            var parsed = {attrs: {}, tag: 'div'};
-            var classes = [];
-            var parts = selector.split(/((?:[#.][\w-]+|\[[^\]]+\]))/);
-            $.each(parts, function(){
-                if (this == "") return;
-                if (this.charAt(0) == '#') {
-                    parsed.attrs.id = this.substring(1, this.length);
-                }
-                else if (this.charAt(0) == '.') {
-                    classes.push(this.substring(1, this.length));
-                }
-                else if (this.charAt(0) == '[') {
-                    var attr = this.substring(1, this.length - 1);
-                    var attr_parts = attr.split(/\s*=\s*/);
-                    var key = attr_parts[0];
-                    var value = attr_parts[1] || '';
-                    parsed.attrs[key] = value;
-                }
-                else {
-                    parsed.tag = this;
+            var parsed = {attrs: {}, tag: 'div', classes: []};
+            $.each($.dominator.matchOrder, function(){
+                var expr = $.dominator.match[this];
+                while ( (match = expr.exec( selector )) ) {
+                    $.dominator.parse[this](match, parsed);
+                    selector = selector.replace(expr, '');
                 }
             });
-            if (classes.length > 0) {
-                parsed.attrs['class'] = classes.join(' ');
+            if (parsed.classes.length) {
+                parsed.attrs['class'] = parsed.classes.join(' ');
+                parsed.classes = null;
             }
+
             return parsed;
         },
         renderVariables: function (template, context) {
